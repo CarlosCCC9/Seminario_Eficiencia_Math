@@ -1,12 +1,17 @@
+#Funciones a usar
+
 import numpy as np
 from numba import jit
 
+#Variable fi aleatoria coord. esf.
 
 @jit(nopython=True)
 def fi(n):
 	u=np.random.uniform(0,1,n)
 	fi=2*np.pi*u
 	return fi
+
+#variable thet coord. esf.
 
 @jit(nopython=True)
 def thet(n):
@@ -21,16 +26,7 @@ def thet(n):
     thet=np.arctan(y)
     return thet
 
-"""
-funcion para los angulos thet
-siguiendo una distribucion uniforme
-
-@jit(nopython=True)
-def thet(n):
-    v=np.random.uniform(0,1,n)
-    thet=np.arccos(2*v-1)
-    return thet
-"""
+#Radios aleatorios de acuerdo a la longitud de decaimiento
 
 @jit(nopython=True)
 def rad_ran(n,lam):
@@ -38,6 +34,7 @@ def rad_ran(n,lam):
 	r=-1*np.log(1-w)/lam
 	return r
 
+#Configuracion geometrica del detector
 
 @jit(nopython=True)
 def geom(x0,ymax,ymin,zmax,zmin):
@@ -46,6 +43,8 @@ def geom(x0,ymax,ymin,zmax,zmin):
 	bet2=np.arctan(ymax/zmin)
 	geo=[alf,bet1,bet2]
 	return geo
+
+# Considerar particulas dentro del "rango de vision" del detector
 
 @jit(nopython=True)
 def disc(n,alf,b1,b2,fi,thet):
@@ -58,6 +57,7 @@ def disc(n,alf,b1,b2,fi,thet):
 	an=np.asarray(ang)
 	return an
 
+# Calculo de la eficiencia
 
 @jit(nopython=True)
 def ef(thet,fi,r,zmax,zmin,ymax,ymin,x0):
