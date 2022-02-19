@@ -15,15 +15,10 @@ def fi(n):
 
 @jit(nopython=True)
 def thet(n):
-    a=np.array([0.6,0.7,0.8,0.9])
-    v=np.random.choice(a,n)
-    w=np.random.uniform(0,1,n)
-    t=np.arccos(1.6*w-1)
     z=np.pi*np.random.uniform(0,1,n)
-    gam=1/(np.sqrt(1-v*v))
-    y=np.sin(z)/(gam*((v/0.77)+np.cos(z)))
-    thet=t-np.arctan(y)
-    thet=np.arctan(y)
+    gam=1/(np.sqrt(1-0.9*0.9))
+    y=np.sin(z)/(gam*((0.9/0.77)+np.cos(z)))
+    thet=np.pi/2-np.arctan(y)
     return thet
 
 #Radios aleatorios de acuerdo a la longitud de decaimiento

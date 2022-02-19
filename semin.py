@@ -3,18 +3,19 @@ import matplotlib.pyplot as plt
 from rando import fi,thet,rad_ran,geom,disc,ef
 from numba import jit
 
-n=50000
-lam=0.007847
 
 @jit(nopython=True)
 def aut(n,lam,a,b,c):
 #Angulos coord Esfericas
 	f=fi(n)
 	t=thet(n)
+#Discriminar de acuerdo a la configuracion geometrica
 	an=disc(n,a,b,c,f,t)
+#longitud de decaimiento aleatorio
 	r=rad_ran(len(an[0,:]),lam)
 	return ef(an[0,:],an[1,:],r,90,60,170,70,50)
 
+#Configuracion Actual
 geo=geom(50,170,70,90,60)
 
 """
@@ -54,15 +55,24 @@ plt.ylabel("efi")
 plt.show()
 """
 
+##############################################################
+"""
+Se producirian 1E8 Bosones de Higgs de los cuales decaerian
+siguiendo el Branching Ratio arbitrario
+que se encuentra [0.1, 0.01, 0.001, 0.0001]
+"""
+br=0.01
+n=int(1e8*br)
 
-
-l=np.logspace(2,3,20)
+l=np.logspace(2,4,20) #Longitudes de decaimiento [100-10000] metros
 res=[]
+st=[]
 for j in l:
     a=[]
-    for i in range(10000):
+    for i in range(100): #1E4 repeticiones 
         a.append(aut(n,1/j,geo[0],geo[1],geo[2]))
     res.append(np.mean(a))
+    st.append(np.std(a))
 
                
 plt.scatter(l,res)
