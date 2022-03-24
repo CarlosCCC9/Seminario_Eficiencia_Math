@@ -15,10 +15,11 @@ def fi(n):
 
 @jit(nopython=True)
 def thet(n):
-    z=np.pi*np.random.uniform(0,1,n)
+    z=2*np.pi*np.random.uniform(0,1,n)
     gam=1/(np.sqrt(1-0.9*0.9))
     y=np.sin(z)/(gam*((0.9/0.77)+np.cos(z)))
-    thet=np.pi/2-np.arctan(y)
+    l=3*np.pi/8*np.random.uniform(0,1,n) #angulos a aumentar del boson
+    thet=np.pi-np.arctan(y)-l-np.pi/2
     return thet
 
 #Radios aleatorios de acuerdo a la longitud de decaimiento
@@ -63,8 +64,8 @@ def ef(thet,fi,r,zmax,zmin,ymax,ymin,x0):
     for i in range(len(z)):
         if(z[i]<zmax and z[i]>zmin and y[i]<ymax and y[i]>ymin and x[i]>-x0 and x[i]<x0):
             con=con+1
-    #return con
-    return con/len(z)
+    return con
+    #return con/len(z)
 
 
 @jit(nopython=True)

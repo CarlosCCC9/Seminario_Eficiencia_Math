@@ -7,16 +7,20 @@ from numba import jit
 @jit(nopython=True)
 def aut(n,lam,a,b,c):
 #Angulos coord Esfericas
-	f=fi(n)
-	t=thet(n)
+    f=fi(n)
+    t=thet(n)
 #Discriminar de acuerdo a la configuracion geometrica
-	an=disc(n,a,b,c,f,t)
+    an=disc(n,a,b,c,f,t)
 #longitud de decaimiento aleatorio
-	r=rad_ran(len(an[0,:]),lam)
-	return ef(an[0,:],an[1,:],r,90,60,170,70,50)
+    r=rad_ran(len(an[0,:]),lam)
+    #return ef(an[0,:],an[1,:],r,120,100,300,100,100) #Inicial
+    return ef(an[0,:],an[1,:],r,90,60,170,70,50) #Actual
 
-#Configuracion Actual
+#Configuracion Actual 
 geo=geom(50,170,70,90,60)
+
+#Configuracion Inicial
+#geo=geom(100,300,100,120,100)
 
 """
 Limite Central
@@ -35,8 +39,6 @@ plt.title(f"Limite Central {N} repeticiones")
 plt.xlabel("Efic")
 plt.ylabel("Probabilidad")
 """
-
-
 
 """
 Numeros grandes
@@ -69,14 +71,16 @@ res=[]
 st=[]
 for j in l:
     a=[]
-    for i in range(100): #1E4 repeticiones 
+    for i in range(1000): #1E4 repeticiones 
         a.append(aut(n,1/j,geo[0],geo[1],geo[2]))
     res.append(np.mean(a))
     st.append(np.std(a))
 
+print(res)
+print(st)
                
-plt.scatter(l,res)
-plt.title("Prueba")
+plt.errorbar(l,res,yerr=st)
+plt.title("Eficiencia")
 plt.xlabel("ct [m]")
-plt.ylabel("efic")
+plt.ylabel("0 < efic < 1")
 plt.show()
