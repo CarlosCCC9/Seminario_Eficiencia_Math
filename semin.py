@@ -13,14 +13,14 @@ def aut(n,lam,a,b,c):
     an=disc(n,a,b,c,f,t)
 #longitud de decaimiento aleatorio
     r=rad_ran(len(an[0,:]),lam)
-    #return ef(an[0,:],an[1,:],r,120,100,300,100,100) #Inicial
-    return ef(an[0,:],an[1,:],r,90,60,170,70,50) #Actual
+    return ef(an[0,:],an[1,:],r,120,100,300,100,100) #Inicial
+    #return ef(an[0,:],an[1,:],r,90,60,170,70,50) #Actual
 
 #Configuracion Actual 
-geo=geom(50,170,70,90,60)
+#geo=geom(50,170,70,90,60)
 
 #Configuracion Inicial
-#geo=geom(100,300,100,120,100)
+geo=geom(100,300,100,120,100)
 
 """
 Limite Central
@@ -63,7 +63,7 @@ Se producirian 1E8 Bosones de Higgs de los cuales decaerian
 siguiendo el Branching Ratio arbitrario
 que se encuentra [0.1, 0.01, 0.001, 0.0001]
 """
-br=0.01
+br=0.001
 n=int(1e8*br)
 
 l=np.logspace(2,4,20) #Longitudes de decaimiento [100-10000] metros
@@ -78,9 +78,11 @@ for j in l:
 
 print(res)
 print(st)
-               
+
+"""               
 plt.errorbar(l,res,yerr=st)
 plt.title("Eficiencia")
 plt.xlabel("ct [m]")
 plt.ylabel("0 < efic < 1")
 plt.show()
+"""
